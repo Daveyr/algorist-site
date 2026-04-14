@@ -1,15 +1,15 @@
 home:
-  image: 'images/rt_logo.jpg'
-  greetings: 'A Hugo Theme for Bloggers!'
-  text: 'The definitive, configurable, customizable, old fashioned rusty coloured theme for web writers and readers.'
+  image: 'images/icon.png'
+  greetings: 'The home of the Algorist'
+  text: 'A collection of thoughts and projects on how to make better decisions with code and math'
 side:
   home:
-  - content: 'If you like the theme make sure to give the repo a star!'
-    imagePath: 'images/gh_source.png'
-    imageHref: 'https://github.com/math-queiroz/rusty-typewriter'
-    imageWidth: '100%'
-  - title: 'Side Pane Features'
-    content: 'There are lots of features regarding the side pane, check [the docs]({{< ref "features/static-content" >}}) for info.'
-  single:
-  - title: 'Static Content'
-    content: 'Single pages (a.k.a. blog posts) can also have static content like so!'
+  # - content: 'If you like the theme make sure to give the repo a star!'
+    # imagePath: 'images/gh_source.png'
+    # imageHref: 'https://github.com/Daveyr/algorist-site/'
+    # imageWidth: '100%'
+  # - title: 'Side Pane Features'
+  #   content: 'There are lots of features regarding the side pane.'
+#  single:
+#  - title: 'Static Content'
+#    content: 'Single pages (a.k.a. blog posts) can also have static content like so!'

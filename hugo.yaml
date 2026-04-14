@@ -1,4 +1,4 @@
-title: Rusty Typewriter
+title: The Algorist
 theme: rusty-typewriter
 languageCode: en-US
 enableRobotsTXT: true
@@ -22,7 +22,7 @@ menus:
       pageRef: /posts
       weight: 1
     - name: Projects
-      pageRef: /features
+      pageRef: /projects
       weight: 2
     - name: About
       pageRef: /about.md
