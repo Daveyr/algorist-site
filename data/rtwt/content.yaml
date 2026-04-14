@@ -4,12 +4,12 @@ home:
   text: 'A collection of thoughts and projects on how to make better decisions with code and math'
 side:
   home:
-  - content: 'If you like the theme make sure to give the repo a star!'
-    imagePath: 'images/gh_source.png'
-    imageHref: 'https://github.com/Daveyr/algorist-site/'
-    imageWidth: '100%'
-  - title: 'Side Pane Features'
-    content: 'There are lots of features regarding the side pane.'
+  # - content: 'If you like the theme make sure to give the repo a star!'
+    # imagePath: 'images/gh_source.png'
+    # imageHref: 'https://github.com/Daveyr/algorist-site/'
+    # imageWidth: '100%'
+  # - title: 'Side Pane Features'
+  #   content: 'There are lots of features regarding the side pane.'
 #  single:
 #  - title: 'Static Content'
 #    content: 'Single pages (a.k.a. blog posts) can also have static content like so!'
