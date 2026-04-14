@@ -1,0 +1,49 @@
+---
+title: Using Rstudio Server with docker
+author: ''
+date: '2021-01-30'
+slug: using-rstudio-server-with-docker
+categories:
+  - Guide
+tags:
+  - Docker
+  - R
+  - Rstudio
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-01-30T11:29:32Z'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<p>It’s taking a long time to run my genetic algorithm optimisation models recently. So much so that I’ve been looking at offloading processes to other computers lying idle on the network. The <a href="https://github.com/Daveyr/armr">armr</a> project aims to do this with parallel processing and Rstudio server docker images running on the raspberry pi but this is a work in progress currently, chiefly due to having to build Rstudio server from source.</p>
+<p>In the meantime I have managed to run Rstudio server in a Docker container on my personal laptop, logging into it on my work laptop. Here’s how I did it, using the image provided by the <a href="https://www.rocker-project.org/">Rocker project</a>.</p>
+<div id="on-the-host-machine" class="section level2">
+<h2>On the host machine</h2>
+<p>Assuming you already have docker installed, run the below code in a terminal on the host machine.</p>
+<pre class="bash"><code>docker pull rocker/rstudio
+docker run --rm -p 8787:8787 -e PASSWORD=&quot;password&quot; rocker/rstudio</code></pre>
+<p>The default user name is “rstudio”. If you want to set the user name, add <code>-e USER="user"</code> to the command above.</p>
+<p>As easy as that. To make the image usable we would have to create a new dockerfile based on this image and add run commands that install packages within R. For example,</p>
+<pre class="bash"><code>from rocker/rstudio
+RUN R -e &quot;install.packages(&#39;tidyverse&#39;)&quot;</code></pre>
+<p>The base <code>armr</code> dockerfile shows how to do this with an install script that reads a requirements.txt file - much quicker than installing each package individually. For saving work, you’ll also need to add a volume tag to the docker run command, e.g.,</p>
+<pre class="bash"><code>docker run --rm -v $(pwd):home/user/ -p 8787:8787 -e USER=&quot;user&quot; -e PASSWORD=&quot;password&quot; rocker/rstudio</code></pre>
+</div>
+<div id="on-the-external-machine" class="section level2">
+<h2>On the external machine</h2>
+<p>To access from another computer on the network, open a browser and navigate to <code>hostname:877</code>, where hostname is the hostname of the computer running the container. This can be found by running <code>hostname</code> on it from the terminal (Linux only). If you want to access Rstudio server on the go, away from home, then you will need to do the following.</p>
+<ul>
+<li>Issue a static IP address to the host computer, most easily done using your router</li>
+<li>Set up port forwarding to forward port 8787 from the static IP to the outside world</li>
+<li>Read up on security settings in Rstudio server and implement them! These are likely to include IP whitelisting, certificate only authentication, banning IP addresses after several failed attempts (see <em>fail2ban</em>) and more</li>
+</ul>
+</div>
