@@ -1,0 +1,7 @@
+"0","library(ggplot2)"
+"0","big_sample <- lhs_sample(decisions = list(a = a,b = b,c = c), n = 1000)"
+"0",""
+"0","ggplot(big_sample, aes(x = c, fill = c)) +"
+"0","  geom_bar() +"
+"0","  scale_fill_manual(values = c(""red"", ""green"", ""blue"", ""black"")) +"
+"0","  labs(title = ""For a single decision, each value has been sampled equally"")"
