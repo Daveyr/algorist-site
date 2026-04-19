@@ -8,9 +8,6 @@ tags: ["Vehicle fleet", "Emissions"]
 categories: ["R package"]
 date: 2020-07-26T23:14:11+01:00
 
-# Optional external URL for project (replaces project detail page).
-external_link: "https://daveyr.github.io/DVLA"
-
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
@@ -39,3 +36,7 @@ url_video: ""
 #   Otherwise, set `slides = ""`.
 slides: ""
 ---
+
+# Summary
+The UK Driver Vehicle License Authority makes information about vehicles available to the public, after they register for an API key. This package makes interacting with this API easy. Refer to the package [documentation](https://daveyr.github.io/DVLA/), written in `packagedown`. The github repo is [here](https://github.com/Daveyr/DVLA).
+

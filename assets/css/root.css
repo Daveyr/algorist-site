@@ -19,8 +19,8 @@
   --body-text-color: #222;
   --body-background-color: #f0efea;
 
-  --primary-color: #cd5c5c;
-  --selection-color: #dda19b;
+  --primary-color: #4caf50;
+  --selection-color: #9bc99e;
 
   --dim-opacity: 65%;
 }
@@ -29,8 +29,8 @@
   --body-text-color: #f0efea;
   --body-background-color: #222;
 
-  --primary-color: #cd5c5c;
-  --selection-color: #7d4141;
+  --primary-color: #4caf50;
+  --selection-color: #2d5a2f;
 
   --dim-opacity: 50%;
 }
