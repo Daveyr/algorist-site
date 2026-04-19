@@ -2,14 +2,11 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "armr"
-summary: "Docker containers for R on 32 bit ARM architectures, including Raspberry Pi"
+
 authors: ["Richard Davey"]
 tags: ["Raspberry Pi", "Docker", "R"]
 categories: ["R package"]
 date: 2020-07-26T23:14:11+01:00
-
-# Optional external URL for project (replaces project detail page).
-external_link: "https://github.com/Daveyr/armr"
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -39,3 +36,7 @@ url_video: ""
 #   Otherwise, set `slides = ""`.
 slides: ""
 ---
+
+Docker containers for R on 32 bit ARM architectures, including Raspberry Pi
+
+external_link: https://github.com/Daveyr/armr

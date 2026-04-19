@@ -4,6 +4,8 @@ home:
   text: 'A collection of thoughts and projects on how to make better decisions with code and math'
 side:
   home:
+  - imagePath: '/images/algo_keycaps.jpg'
+    imageWidth: '100%'
   # - content: 'If you like the theme make sure to give the repo a star!'
     # imagePath: 'images/gh_source.png'
     # imageHref: 'https://github.com/Daveyr/algorist-site/'
