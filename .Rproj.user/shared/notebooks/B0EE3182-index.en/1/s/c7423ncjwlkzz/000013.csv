@@ -1,6 +1,0 @@
-"0",""
-"0","ggplot(big_sample, aes(x = a, y = b, colour = c)) +"
-"0","  geom_jitter() +"
-"0","  scale_colour_manual(values = c(""red"", ""green"", ""blue"", ""black"")) +"
-"0","  labs(title = ""Every value combination across all decisions has also been sampled equally"")"
-"0",""
