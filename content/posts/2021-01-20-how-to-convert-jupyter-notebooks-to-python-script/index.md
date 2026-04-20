@@ -1,22 +1,20 @@
 ---
-title: How to convert Jupyter notebooks to python script
+title: "How to convert Jupyter notebooks to python script"
 author: ''
-date: '2021-01-20'
-slug: how-to-convert-jupyter-notebooks-to-python-script
-categories:
-  - Guide
+date: "2021-01-20"
+slug: "how-to-convert-jupyter-notebooks-to-python-script"
+categories: Guide
 tags:
-  - Python
-  - Jupyter
+- Python
+- Jupyter
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2021-01-20T14:41:52Z'
-featured: no
+featured: false
 image:
   caption: ''
   focal_point: ''
-  preview_only: no
+  preview_only: false
 projects: []
 ---
 
