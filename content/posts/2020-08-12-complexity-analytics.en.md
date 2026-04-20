@@ -1,0 +1,34 @@
+---
+title: Making the complex uncomplicated
+author: ''
+date: '2020-08-20'
+slug: complexity-analytics
+categories:
+  - Blog
+tags:
+  - Arcadis
+---
+
+_This post is a draft of an article I wrote on the [arcadisgen.com](https://www.arcadisgen.com/en/what-we-do/insights/blog/taking-away-the-complexity) website..._
+
+Utilities companies such as water, electricity and gas networks operate in complex environments. In my time with Arcadis Gen I've seen diverse reactions from clients in the face of such complexity:
+
+* I don't have enough data to begin to analyse my system
+* I'm drinking from a fire hydrant! It's not possible to keep pace with my newly acquired data
+* It’s too difficult to make data driven decisions as it is all too complicated
+
+I will refer to this as the three stages of data grief. In the face of complexity, companies often demand a highly sophisticated model. However, most companies generally can't match this with the quantity and quality of data it requires. This explains the first common reaction: "I don't have enough data". When authorisation is given to collect more data, the next reaction happens: "I can't keep pace with my data". Finally, when an organisation devotes time to organising its warehouse of data then the final reaction occurs: "it's too difficult to make sense of my data".
+
+I have a hunch that some of the issues experienced are because many people conflate complexity with being complicated. Complexity needn't be complicated; they are not the same thing. Complex is a description of the system in which a company operates. It is something that you generally cannot control. Complicated is a description of the analytical _approach_ that a company might take. How complicated your analysis might be is very much something that you can control.
+
+But surely you need a complicated model to understand a complex system? It turns out that this is frequently not true. Ironically, understanding a complex system can become easier when interpreting a simple model. At Arcadis Gen we're very aware of the trade-offs that have to be made when modelling. At one extreme it is possible to build a complicated and precise model, but one that makes inaccurate predictions because it does not generalise in the real world. At the other extreme is a simple model that is easily understood and can make accurate predictions, but lacks the precision to be useful. The first model might predict your asset effective age to be 1000.1338273 years old (precisely wrong); the second might predict it to be between 0 and 80 years (accurate but imprecise). The sweet spot lies somewhere inbetween, where a model is understandable and defendable yet yields insights into the dominant causal relationships at work.
+
+![](/img/trade-off.png)
+
+Let's look at some real world examples to illustrate. To tackle the first stage of data grief (not enough data), we often work with companies to draw out information from their subject matter experts. For instance, we've built a web app that can construct Weibull deterioration curves for infrastructure assets based solely on a questionnaire. For road fleet modelling we have used open data from the UK Driver Vehicle Licensing Authority to augment information on individual vehicles. We've also used new car registration data from the Vehicle Certification Agency to build predictive models to infill missing values based on trends.
+
+To tackle the second stage (too much data), Arcadis Gen frequently works with clients to make the business problem as simple as possible, but no simpler. When we worked with an electricity generator to optimise the maintenance of auxillary plant, we had enough data to model which year to replace and refurbish each and every asset. If we had done this there would have been the temptation to try and model all the things that made each asset unique (like asset condition monitoring data, work orders, etc.).  However, it was more appropriate to find the optimum replacement and refurbishment schedule frequency to apply to whole asset classes, as this was more defendable and explainable to asset managers. After all, the purpose of the model was to pursuade these stakeholders to take action from the results.
+
+Sometimes problems refuse to be simplified, which leads to the final stage of data grief (too complicated). Even if you can't easily simplify the analysis, it is essential to simplify the visualisation and reporting. For a UK water company, we developed a real time water supply and demand tool (called WISDM-O) that takes SCADA data from pumping stations and predicts future demand and stored water volumes. A freshwater distribution network is a complex system that couldn't be reduced to a simple model. However, the smartest part of this approach was actually the simplest: a set of high level dashboards with all the key metrics needed for senior management to make decisions.
+
+Whatever data grief you are experiencing, we're happy to help make the complex uncomplicated.
