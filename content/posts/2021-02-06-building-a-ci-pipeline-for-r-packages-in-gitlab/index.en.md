@@ -13,7 +13,6 @@ tags:
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2021-02-06T15:07:39Z'
 featured: no
 image:
   caption: ''

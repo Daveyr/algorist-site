@@ -10,7 +10,6 @@ tags:
 subtitle: ''
 summary: 'After several years away, this blog is back online with an updated Hugo theme. More articles coming soon.'
 authors: []
-lastmod: '2026-04-19T00:00:00Z'
 featured: no
 image:
   caption: ''

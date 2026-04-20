@@ -12,7 +12,6 @@ tags:
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2022-02-19T20:58:07Z'
 featured: no
 image:
   caption: ''

@@ -14,7 +14,6 @@ tags:
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2021-01-24T15:15:30Z'
 featured: no
 image:
   caption: ''
