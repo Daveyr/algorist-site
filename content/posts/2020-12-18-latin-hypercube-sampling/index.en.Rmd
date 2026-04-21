@@ -2,7 +2,7 @@
 title: Latin Hypercube Sampling
 date: '2020-12-18'
 slug: latin-hypercube-sampling
-topics:
+categories:
   - Guide
 tags:
   - R

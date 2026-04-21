@@ -2,7 +2,7 @@
 title: Latin Hypercube Sampling
 date: '2020-12-18'
 slug: latin-hypercube-sampling
-topics:
+categories:
   - Guide
 tags:
   - R
@@ -30,19 +30,19 @@ Let's assume we would like only 12 individuals from the 24 potential unique comb
 
 
 ```
-##             a          b         c
-## 1  0.50695490 0.53384091 0.6236271
-## 2  0.70381564 0.87217700 0.2892675
-## 3  0.09761828 0.77257902 0.5161118
-## 4  0.06103976 0.22427145 0.9689555
-## 5  0.45270101 0.09700284 0.7680376
-## 6  0.58669305 0.97829841 0.1080888
-## 7  0.32827328 0.42633203 0.1854635
-## 8  0.38817769 0.64999106 0.7082770
-## 9  0.97219897 0.39859057 0.0435290
-## 10 0.78798645 0.28261713 0.8646416
-## 11 0.24214768 0.05467534 0.3580545
-## 12 0.86691463 0.70473584 0.4890290
+##              a          b          c
+## 1  0.919315659 0.29722517 0.89067913
+## 2  0.219737090 0.54003818 0.97684103
+## 3  0.786035592 0.09884228 0.02435949
+## 4  0.291249510 0.80647784 0.72672712
+## 5  0.385983258 0.69965332 0.36750225
+## 6  0.142970749 0.42988014 0.33153931
+## 7  0.681980810 0.89320886 0.82536674
+## 8  0.611891701 0.05151168 0.42422109
+## 9  0.003686905 0.38770931 0.13295385
+## 10 0.553027147 0.60422350 0.62108657
+## 11 0.847629535 0.19273206 0.52636935
+## 12 0.443599532 0.98950661 0.21348403
 ```
 
 Next we map the 0-1 distributions onto the real distributions of a, b and c. For instance, c has four possible values so the distribution should be 1-4. We also convert the values to factors in order to label them properly.
@@ -61,18 +61,18 @@ choices
 ## # A tibble: 12 × 3
 ##    a     b     c    
 ##    <fct> <fct> <fct>
-##  1 2     FALSE blue 
-##  2 3     FALSE green
-##  3 1     FALSE blue 
-##  4 1     TRUE  black
-##  5 2     TRUE  black
-##  6 2     FALSE red  
-##  7 1     TRUE  red  
-##  8 2     FALSE blue 
-##  9 3     TRUE  red  
-## 10 3     TRUE  black
-## 11 1     TRUE  green
-## 12 3     FALSE green
+##  1 3     TRUE  black
+##  2 1     FALSE black
+##  3 3     TRUE  red  
+##  4 1     FALSE blue 
+##  5 2     FALSE green
+##  6 1     TRUE  green
+##  7 3     FALSE black
+##  8 2     TRUE  green
+##  9 1     TRUE  red  
+## 10 2     FALSE blue 
+## 11 3     TRUE  blue 
+## 12 2     FALSE red
 ```
 
 For convenience we can bring this into a single function like so.
@@ -96,16 +96,16 @@ lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter 
 ## # A tibble: 10 × 3
 ##    cars               species    letter
 ##    <fct>              <fct>      <fct> 
-##  1 Merc 230           virginica  Y     
-##  2 Maserati Bora      setosa     X     
-##  3 Fiat 128           virginica  Z     
-##  4 AMC Javelin        versicolor X     
-##  5 Pontiac Firebird   setosa     Z     
-##  6 Merc 450SL         virginica  Y     
-##  7 Volvo 142E         virginica  Z     
-##  8 Cadillac Fleetwood versicolor X     
-##  9 Mazda RX4          versicolor Y     
-## 10 Valiant            setosa     X
+##  1 Pontiac Firebird   setosa     Z     
+##  2 Valiant            virginica  Z     
+##  3 Ford Pantera L     setosa     Y     
+##  4 Hornet Sportabout  setosa     X     
+##  5 Cadillac Fleetwood setosa     Y     
+##  6 Honda Civic        virginica  Z     
+##  7 Volvo 142E         versicolor Y     
+##  8 Mazda RX4          versicolor X     
+##  9 Merc 280           virginica  X     
+## 10 AMC Javelin        virginica  X
 ```
 
 ## Continuous distributions
@@ -122,8 +122,8 @@ choices_continuous
 ```
 
 ```
-##  [1] 2.013910 2.407631 1.195237 1.122080 1.905402 2.173386 1.656547 1.776355
-##  [9] 2.944398 2.575973 1.484295 2.733829
+##  [1] 2.838631 1.439474 2.572071 1.582499 1.771967 1.285941 2.363962 2.223783
+##  [9] 1.007374 2.106054 2.695259 1.887199
 ```
 
 ## Testing coverage

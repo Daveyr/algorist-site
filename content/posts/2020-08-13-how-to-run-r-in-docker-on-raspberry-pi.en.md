@@ -1,0 +1,75 @@
+---
+title: How to run R using Docker on Raspberry Pi
+author: ''
+date: '2020-08-17'
+slug: how-to-run-r-using-docker-on-raspberry-pi
+categories:
+  - Guide
+tags:
+  - R
+  - Raspberry Pi
+  - Docker
+subtitle: ''
+summary: ''
+authors: []
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+When I began learning about how to use Docker I stumbled on an excellent project called [Rocker](https://www.rocker-project.org/). For anyone with an x86 machine these Rocker images allow them to run R and most of its dependencies in a containerised environment. Plumber APIs, anyone? What about your own Shiny server? Finally, data scientists using R can have the same level of control on dependencies and package versions as Python users have become accustomed to through `venv`.
+
+Things are a little more complicated for ARM users, especially 32-bit ARM architectures such as the Raspberry Pi. No Rocker images offer such compatibility so we're on our own. This was the major reason I've started a project, called, [ARMR](https://www.algorist.co.uk/project/armr/), to build a series of Docker images that **do** offer compatibility with the lovable credit card sized computer.
+
+# Hello woRld
+
+Whilst not much has happened with the project so far, at least I have a version of "Hello woRld": a container with r-base installed. But first we must install Docker.
+
+## Installation
+From the terminal on a Raspberry Pi, run the following.
+
+```
+# Downloads installation shell script and pipes it into the sh command
+curl -sSL https://get.docker.com | sh
+# Adds pi to the docker group so the user can run
+sudo usermod -aG docker pi
+```
+
+From here we can either reboot or run `systemctl start docker.service` to start up Docker. To test it is working, try `docker info`, then `docker version`.
+
+Once you know that Docker is running, let's try a few things in order of sophistication. `docker run hello-world` will run a container based on an image called _hello-world_. `docker run -it ubuntu bash` takes it up a notch: now we have an ubuntu bash container running in interactive mode in the terminal.
+
+To make it even more useful, we ought to have access to persistent storage. Let's modify the command to include a mount volume.
+
+```
+docker run -it -v /home:/home ubuntu bash
+```
+
+The `-v` flag tells Docker to attach a volume; the following argument contains the information on what locations should be used, of the form *from_volume:to_volume*. The location on your machine is the *from_volume* and the location on your container is the *to_volume*. In our example, anything you create in the home folder within the container will persist in the home folder of your Raspberry Pi after you close the container. The easiest way to test this is to type `touch myfile` in the interactive terminal in the container, and watch the same file appear in your home folder.
+
+
+## Build an R container
+
+Building a base R container is as simple as writing the code below to a file called `Dockerfile`. We use an arm32 ubuntu image as a base, from which we set an environment variable to force the terminal to be non-interactive. This is because when r-base is installed it waits for user input when setting parameters, hanging the container build. By setting the installation to be non-interactive we accept all the defaults, including timezone. Be mindful of this when handling datetimes!
+
+```
+FROM arm32v7/ubuntu
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update && apt install r-base -y
+```
+
+Once the Dockerfile is created you run it by typing `docker build -t armr` in the same folder in the terminal. Docker then builds an image with the tag _armr_. It builds by starting with the base image, setting the environment variable and adding a layer that comprises the result from the `RUN` command.
+
+In fact, you can see all the layers that are built into any image by running `docker history <image_name>` in the terminal.
+
+
+# What's next?
+Base R is fine but to be useful we need to add a lot more packages and supporting software. Future development is likely to encompass the following:
+
+* Shiny server (I'd like to host one on this site)
+* Plumber API server
+* Rstudio server (so I can do analysis from anywhere on anything, even a tablet)
+* Images for commonly used packages (Tidyverse, data.table, caret, etc.)
