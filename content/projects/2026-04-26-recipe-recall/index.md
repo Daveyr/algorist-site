@@ -11,7 +11,6 @@ tags:
   - Python
   - GitHub
   - AI
-draft: true
 ---
 
 This was the result of a one-hour AI hackathon organised by [Steel-AI](https://alex-kelly.blog/Sheffield_event_info/event_2_advert_agents.html) (not including the 3 hours of debugging and documentation afterwards!).
