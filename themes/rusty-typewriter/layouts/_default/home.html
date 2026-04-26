@@ -11,6 +11,13 @@
       {{- partial "search_bar" . -}}
     </div>
 
+    {{/* Featured posts section - uncomment to enable
+    {{- $featured := where $postsAndProjects "Params.featured" true -}}
+    {{- if (and $featured site.Params.rtwt.home.showFeatured) -}}
+        {{- partial "home/micro_list.html" (dict "items" $featured "title" (i18n "featured_posts")) -}}
+    {{- end -}}
+    */}}
+
     {{- if and $recent site.Params.rtwt.home.showRecent -}}
         {{- partial "home/micro_list.html" (dict "items" $recent "title" (i18n "recent_posts")) -}}
     {{- end -}}
