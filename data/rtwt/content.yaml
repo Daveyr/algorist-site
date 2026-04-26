@@ -12,6 +12,6 @@ side:
     # imageWidth: '100%'
   # - title: 'Side Pane Features'
   #   content: 'There are lots of features regarding the side pane.'
-#  single:
-#  - title: 'Static Content'
-#    content: 'Single pages (a.k.a. blog posts) can also have static content like so!'
+  single:
+  - title: 'Recipe Recall'
+    content: '[https://github.com/Daveyr/recipe_recall](https://github.com/Daveyr/recipe_recall)'

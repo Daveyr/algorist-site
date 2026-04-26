@@ -30,19 +30,19 @@ Let's assume we would like only 12 individuals from the 24 potential unique comb
 
 
 ```
-##              a          b          c
-## 1  0.919315659 0.29722517 0.89067913
-## 2  0.219737090 0.54003818 0.97684103
-## 3  0.786035592 0.09884228 0.02435949
-## 4  0.291249510 0.80647784 0.72672712
-## 5  0.385983258 0.69965332 0.36750225
-## 6  0.142970749 0.42988014 0.33153931
-## 7  0.681980810 0.89320886 0.82536674
-## 8  0.611891701 0.05151168 0.42422109
-## 9  0.003686905 0.38770931 0.13295385
-## 10 0.553027147 0.60422350 0.62108657
-## 11 0.847629535 0.19273206 0.52636935
-## 12 0.443599532 0.98950661 0.21348403
+##             a          b          c
+## 1  0.33294610 0.10451561 0.74941994
+## 2  0.08062376 0.32965333 0.46038286
+## 3  0.58735423 0.88374202 0.36045797
+## 4  0.94940245 0.17358330 0.80232318
+## 5  0.36656711 0.58122048 0.25851211
+## 6  0.54630103 0.97777021 0.88724164
+## 7  0.86868358 0.69483831 0.92874699
+## 8  0.69615823 0.42490342 0.02729945
+## 9  0.47484290 0.76646097 0.24412198
+## 10 0.13634272 0.03092663 0.55401471
+## 11 0.75789241 0.37229270 0.13919799
+## 12 0.21069690 0.63134148 0.59831409
 ```
 
 Next we map the 0-1 distributions onto the real distributions of a, b and c. For instance, c has four possible values so the distribution should be 1-4. We also convert the values to factors in order to label them properly.
@@ -61,18 +61,18 @@ choices
 ## # A tibble: 12 × 3
 ##    a     b     c    
 ##    <fct> <fct> <fct>
-##  1 3     TRUE  black
-##  2 1     FALSE black
-##  3 3     TRUE  red  
-##  4 1     FALSE blue 
-##  5 2     FALSE green
-##  6 1     TRUE  green
+##  1 1     TRUE  black
+##  2 1     TRUE  green
+##  3 2     FALSE green
+##  4 3     TRUE  black
+##  5 1     FALSE green
+##  6 2     FALSE black
 ##  7 3     FALSE black
-##  8 2     TRUE  green
-##  9 1     TRUE  red  
-## 10 2     FALSE blue 
-## 11 3     TRUE  blue 
-## 12 2     FALSE red
+##  8 3     TRUE  red  
+##  9 2     FALSE red  
+## 10 1     TRUE  blue 
+## 11 3     TRUE  red  
+## 12 1     FALSE blue
 ```
 
 For convenience we can bring this into a single function like so.
@@ -94,18 +94,18 @@ lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter 
 
 ```
 ## # A tibble: 10 × 3
-##    cars               species    letter
-##    <fct>              <fct>      <fct> 
-##  1 Pontiac Firebird   setosa     Z     
-##  2 Valiant            virginica  Z     
-##  3 Ford Pantera L     setosa     Y     
-##  4 Hornet Sportabout  setosa     X     
-##  5 Cadillac Fleetwood setosa     Y     
-##  6 Honda Civic        virginica  Z     
-##  7 Volvo 142E         versicolor Y     
-##  8 Mazda RX4          versicolor X     
-##  9 Merc 280           virginica  X     
-## 10 AMC Javelin        virginica  X
+##    cars                species    letter
+##    <fct>               <fct>      <fct> 
+##  1 Volvo 142E          setosa     X     
+##  2 Merc 280C           versicolor Y     
+##  3 Datsun 710          setosa     X     
+##  4 Merc 240D           versicolor X     
+##  5 Mazda RX4           versicolor Z     
+##  6 Lincoln Continental setosa     X     
+##  7 Lotus Europa        virginica  Y     
+##  8 Honda Civic         virginica  Z     
+##  9 Pontiac Firebird    virginica  Z     
+## 10 Merc 450SLC         virginica  Z
 ```
 
 ## Continuous distributions
@@ -122,8 +122,8 @@ choices_continuous
 ```
 
 ```
-##  [1] 2.838631 1.439474 2.572071 1.582499 1.771967 1.285941 2.363962 2.223783
-##  [9] 1.007374 2.106054 2.695259 1.887199
+##  [1] 1.665892 1.161248 2.174708 2.898805 1.733134 2.092602 2.737367 2.392316
+##  [9] 1.949686 1.272685 2.515785 1.421394
 ```
 
 ## Testing coverage
