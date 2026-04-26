@@ -3,19 +3,22 @@
   {{- partial "home/greetings.html" -}}
 
   {{- $indexablePages := where site.RegularPages "Params.indexable" "ne" false -}}
+  {{- $postsAndProjects := where $indexablePages "Section" "in" (slice "posts" "projects") -}}
+  {{- $recent := sort $postsAndProjects "Date" "desc" -}}
 
   <div style="width:95%;margin:0 auto;">
     <div class="show-md" style="display:none;">
       {{- partial "search_bar" . -}}
     </div>
 
-    {{- $featured := where $indexablePages "Params.featured" true -}}
+    {{/* Featured posts section - uncomment to enable
+    {{- $featured := where $postsAndProjects "Params.featured" true -}}
     {{- if (and $featured site.Params.rtwt.home.showFeatured) -}}
         {{- partial "home/micro_list.html" (dict "items" $featured "title" (i18n "featured_posts")) -}}
     {{- end -}}
-    
-    {{- if and site.RegularPages site.Params.rtwt.home.showRecent -}}
-      {{- $recent := cond site.Params.rtwt.home.hideRecentWhenFeatured (where $indexablePages "Params.featured" "!=" true) site.RegularPages -}}
+    */}}
+
+    {{- if and $recent site.Params.rtwt.home.showRecent -}}
         {{- partial "home/micro_list.html" (dict "items" $recent "title" (i18n "recent_posts")) -}}
     {{- end -}}
   </div>
