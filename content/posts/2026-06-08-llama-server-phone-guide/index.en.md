@@ -30,6 +30,8 @@ The Samsung Galaxy M21 is a good candidate because it's affordable, has reasonab
 
 ## Part 1: Preparing Your Phone
 
+If you just want to run the AI server on your stock Android phone (or any other hardware) then ignore this and go straight to [part 2](#part-2-flashing-lineageos).
+
 ### Step 1.1: Enable Developer Options and USB Debugging
 
 1. Go to **Settings → About Phone**
