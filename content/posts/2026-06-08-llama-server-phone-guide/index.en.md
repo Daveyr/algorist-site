@@ -30,7 +30,7 @@ The Samsung Galaxy M21 is a good candidate because it's affordable, has reasonab
 
 ## Part 1: Preparing Your Phone
 
-If you just want to run the AI server on your stock Android phone (or any other hardware) then ignore this and go straight to [part 2](#part-2-flashing-lineageos).
+If you just want to run the AI server on your stock Android phone (or any other hardware) then ignore this and go straight to [part 3](#part-3-setting-up-termux).
 
 ### Step 1.1: Enable Developer Options and USB Debugging
 
@@ -63,7 +63,7 @@ adb reboot bootloader
    ```
 
 I've flashed a few phones and tablets in the past (both Samsung and non-Samsung devices) but for this phone in particular I was surprised by a security feature I hadn't encountered before: **"KG State Prenormal"**. This is a security feature that prevents flashing unsigned ROMs. If you encounter this:
-1. In the stock Android OS (called the stock "ROM"), ensure the phone is on your WiFi network and connected to the internet, with the correct date set. This will register your device on Samsung's servers.
+1. In the original Android OS (called the stock "ROM"), ensure the phone is on your WiFi network and connected to the internet, with the correct date set. This will register your device on Samsung's servers.
 1. Turn off WiFi and sever your connection to the internet.
 1. Temporarily set your phone's date to at least 3 months before (I set to January 1, 2026).
 1. Leave Android and power off. Then boot into Download Mode (varies by phone but mine needed Power Down + Power Up and then connection by USB to my PC)
@@ -92,6 +92,8 @@ You should see the TWRP interface (blue/orange theme, touch controls).
 
 ## Part 2: Flashing LineageOS
 
+If you had already unlocked your phone for other reasons and wanted to try LineageOS, here is the place in the guide to start. Also start here if you want to upgrade LineageOS or try an even lighter weight OS (like [Droidian](https://droidian.org/)).
+
 ### Step 2.1: Download LineageOS
 
 1. Go to [lineageos.org](https://lineageos.org/) and find your device
@@ -110,12 +112,13 @@ You should see the TWRP interface (blue/orange theme, touch controls).
 
 Congratulations! You now have a lightweight OS with much less background RAM usage than stock Android.
 
-> Top tip if you end up flashing the wrong ROM image (like I did initially) and soft brick your phone. Simply flash the TWRP recovery image to both the recovery and  
+>[!NOTE]
+>Top tip if you end up flashing the wrong ROM image (like I did initially) and soft brick your phone. Simply flash the TWRP recovery image to both the recovery and boot partitions to flush the dud OS and guarantee booting into TWRP.
 
 
 ### Step 2.3: Verify RAM Usage
 
-LineageOS on an M21 idles at roughly 0.8 GB RAM compared to stock OneUI at 1.6 GB. This gives you about 0.8 GB extra RAM for running inference.
+LineageOS on an M21 idles at roughly 0.8 GB RAM compared to stock Android at 1.6 GB (possible greater depending on the phone and the bloatware). For the Samsung M21, this means around 3.2GB for running the AI server and model.
 
 ```bash
 adb shell
@@ -125,6 +128,8 @@ free -h
 
 ## Part 3: Setting Up Termux
 
+This next step works whether you have followed the previous two and flashed a custom ROM to your phone or if you are just using your phone with the standard Android OS.
+
 ### Step 3.1: Install Termux
 
 1. Install **F-Droid** (an open-source app store) from [f-droid.org](https://f-droid.org/)
@@ -132,6 +137,8 @@ free -h
 3. Install it
 
 Alternatively, download the Termux `.apk` directly from [termux.com](https://termux.com/).
+
+
 
 ### Step 3.2: Initial Setup
 
