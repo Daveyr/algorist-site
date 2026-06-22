@@ -1,5 +1,7 @@
 title: The Algorist
-theme: rusty-typewriter
+theme: 
+  - hugo-admonitions
+  - rusty-typewriter
 languageCode: en-US
 enableRobotsTXT: true
 params:
