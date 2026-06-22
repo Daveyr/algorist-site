@@ -30,7 +30,7 @@ The Samsung Galaxy M21 is a good candidate because it's affordable, has reasonab
 
 ## Part 1: Preparing Your Phone
 
-If you just want to run the AI server on your stock Android phone (or any other hardware) then ignore this and go straight to [part 3](#part-3-setting-up-termux).
+If you just want to run the AI server on your stock Android phone (or any other hardware) then ignore this and go straight to [part 3](#part-3-setting-up-termux). Running on a computer and not a phone or tablet? Jump to [part 4](#part-4-building-llamacpp) and set up the AI server straight away.
 
 ### Step 1.1: Enable Developer Options and USB Debugging
 
@@ -112,13 +112,13 @@ If you had already unlocked your phone for other reasons and wanted to try Linea
 
 Congratulations! You now have a lightweight OS with much less background RAM usage than stock Android.
 
->[!NOTE]
+>[!TIP]
 >Top tip if you end up flashing the wrong ROM image (like I did initially) and soft brick your phone. Simply flash the TWRP recovery image to both the recovery and boot partitions to flush the dud OS and guarantee booting into TWRP.
 
 
 ### Step 2.3: Verify RAM Usage
 
-LineageOS on an M21 idles at roughly 0.8 GB RAM compared to stock Android at 1.6 GB (possible greater depending on the phone and the bloatware). For the Samsung M21, this means around 3.2GB for running the AI server and model.
+LineageOS on an M21 idles at roughly 0.8 GB RAM compared to stock Android at 1.6 GB. For the Samsung M21, this means around 3.2GB for running the AI server and model. Your mileage may vary, depending on specific phone and carrier bloatware.
 
 ```bash
 adb shell
@@ -169,6 +169,8 @@ ip a | grep inet
 # Look for an IP like 192.168.x.x or 10.0.x.x
 ```
 
+I personally prefer to set a static IP address for my devices using my router so that addresses aren't guesswork.
+
 From your PC, test SSH access:
 
 ```bash
@@ -176,6 +178,8 @@ ssh -p 8022 u0_aXXX@<phone-ip>
 # Username shown in your Termux prompt (e.g., u0_a387)
 # Enter the password you set
 ```
+
+Once you've tested ssh using a password I highly recommend using an encryption key for secure quick access going forward. There are plenty of guides online and you only need a couple of commands (`ssh-keygen` and `scp`) to generate a key and copy the public key over to the phone (or any other device you might be using.)
 
 ### Step 3.4: Install tmux
 
@@ -187,7 +191,11 @@ pkg install tmux
 
 ## Part 4: Building llama.cpp
 
+This is where things become more exciting. We'll build llama.cpp from source so that it runs optimally for the target hardware. If you are using a Windows, Mac or Linux machine, or are happy to use a generic Android arm64 pre-built binary, you can just install that instead from the same [GitHub repository](https://github.com/ggml-org/llama.cpp/releases) as below.
+
 ### Step 4.1: Install Build Dependencies
+
+These are needed to build the binary file, written in C/C++.
 
 ```bash
 pkg install cmake ninja build-essential git
@@ -213,34 +221,40 @@ Once complete, the main binary is at `llama.cpp/build/bin/llama-server`.
 # Should print version info
 ```
 
+Typing ./build/bin/llama-server each time is a hastle but if you add the following line to the end of your .bashrc file in your phone's home folder you can simply type llama-server and the phone will understand the path:
+`export PATH=$PATH:~llama.cpp/build/bin`. I'll refer to the command `llama-server` in the instructions from now on.
+
 ## Part 5: Downloading a Model
 
-### Step 5.1: Understanding Model Quantization
+### Step 5.1: Understanding Model quantisation
 
-Models are stored in **GGUF format** with different quantization levels:
+Models are stored in **GGUF format** with different quantisation levels:
 - **Q4_K_M**: Good quality, moderate RAM (~0.8 GB for 1.2B model)
 - **Q3_K_M**: Lower quality, smaller RAM (~0.6 GB for 1.2B model)
 - **Q8_0**: Larger, better quality (~1.2+ GB for 1.2B model)
 
-For a 4 GB phone, **Q4_K_M is optimal** for 1–2B parameter models.
+For a 4 GB phone, **Q4_K_M is optimal** for 1–2B parameter models. 
+
+>[!NOTE] As an aside, [Ollama](ollama.com) typically uses this quantisation as default for local models and some cloud models too, because the memory efficiency is appreciable but the precision loss is not.
 
 ### Step 5.2: Download via llama-server
 
 The easiest way is to use llama-server's built-in Hugging Face support:
 
 ```bash
-./build/bin/llama-server -hf LiquidAI/LFM2.5-1.2B-Instruct-GGUF:Q4_K_M
+llama-server -hf LiquidAI/LFM2.5-1.2B-Instruct-GGUF:Q4_K_M
 ```
 
-This downloads to `~/.cache/huggingface/` and loads automatically. First run takes a minute to download (~600 MB).
+This downloads to `~/.cache/huggingface/hub` and loads automatically. First run takes a minute to download (~600 MB).
 
 ### Step 5.3: Model Recommendations
 
 For a 4 GB phone:
-- **LFM 2.5 1.2B**: ~14–18 tok/s (fastest, lower quality)
-- **Qwen 2.5 1.5B**: ~12–15 tok/s (best quality-per-token)
-- **SmolLM 1.7B**: Solid middle ground
+- **LFM 2.5 1.2B**: ~9 tok/s and the one I've chosen to test first
+- **Qwen 3.5 0.8B**: smaller model so should be quicker. I haven't tested this size version but it's a reasoning model so I have my suspicions about accuracy with so few parameters.
+- **SmolLM 1.7B**: Solid middle ground.
 - **Gemma 4 2B**: Requires careful tuning, larger context risky
+- **FunctionGemma**: small and specifically tuned for function (tool) calling.
 
 ## Part 6: Running the Server
 
@@ -249,8 +263,7 @@ For a 4 GB phone:
 From your phone's Termux:
 
 ```bash
-cd ~/llama.cpp
-./build/bin/llama-server \
+llama-server \
   -hf LiquidAI/LFM2.5-1.2B-Instruct-GGUF:Q4_K_M \
   -c 4096 \
   -t 4 \
@@ -274,7 +287,7 @@ From your PC, start the server in a persistent tmux session:
 
 ```bash
 ssh -p 8022 u0_aXXX@<phone-ip> \
-  "tmux new-session -d -s llm 'cd ~/llama.cpp && ./build/bin/llama-server -hf LiquidAI/LFM2.5-1.2B-Instruct-GGUF:Q4_K_M -c 4096 -t 4 -fit off --host 0.0.0.0 --port 8080'"
+  "tmux new-session -d -s llm 'cd ~/llama.cpp && llama-server -hf LiquidAI/LFM2.5-1.2B-Instruct-GGUF:Q4_K_M -c 4096 -t 4 -fit off --host 0.0.0.0 --port 8080'"
 ```
 
 The server now runs even after you disconnect. To check on it:
@@ -286,7 +299,7 @@ ssh -p 8022 u0_aXXX@<phone-ip> tmux attach -t llm
 
 ### Step 6.3: Verify Network Accessibility
 
-From your PC:
+From any machine on your network:
 
 ```bash
 # Open web UI in browser:
@@ -307,30 +320,47 @@ Now that you have an OpenAI-compatible API running on your phone, you can use it
 In your OpenCode configuration, add:
 
 ```json
-{
-  "model": "llama-phone",
-  "provider": "openai",
-  "base_url": "http://<phone-ip>:8080/v1",
-  "api_key": "not-needed"
+  "provider": {
+    "lfm-local": {
+      "options": {
+        "baseURL": "http://192.168.1.210:8080/v1",
+        "apiKey": "sk-placeholder"
+      },
+      "models": {
+        "LFM2.5-1.2B": {
+          "id": "LFM2.5-1.2B",
+          "name": "LFM2.5-1.2B",
+          "limit": {
+            "context": 4000,
+            "output": 4096
+          }
+        }
+      }
+    }
+  },
+  "agent": {
+    "lfm-local-code-explorer": {
+      "description": "Fast-local SLM for code search and exploration tasks. Uses LFM2.5-1.2B hosted locally on device 192.168.1.210. Optimized for quick file searches, pattern matching, and navigating codebases without unnecessary explanations.",
+      "model": "lfm-local/LFM2.5-1.2B",
+      "mode": "subagent",
+      "tools": {
+        "bash": true
+      },
+      "instructions": "You are a fast code search and exploration assistant. Use Bash for grep, ripgrep, find, and file system operations. Provide concise, actionable results without extensive explanations. Focus on speed and accuracy for locating files, functions, patterns, and understanding code structure.",
+      "color": "#4caf50"
+    }
+  }
 }
 ```
+As a bonus, if you added this configuration to your opencode.json configuration you would get an agent the same accent colour as this website!
+
+![A green agent in OpenCode](images/lfm_agent_green.png)
 
 This lets you spawn lightweight subagents on your phone for tasks like:
 - Code linting and formatting checks
 - Web searches (with an MCP server)
 - Recipe retrieval (like the `recipe_recall` MCP server)
 - Any deterministic task that doesn't need a large context or complex reasoning
-
-## Performance Expectations
-
-On a Samsung M21 (Exynos 9611, 4 GB RAM, CPU-only):
-
-| Model | Quantization | RAM | Speed | Quality |
-|-------|--------------|-----|-------|---------|
-| LFM 2.5 1.2B | Q4_K_M | ~0.8 GB | 14–18 tok/s | Medium |
-| Qwen 2.5 1.5B | Q4_K_M | ~1.0 GB | 12–15 tok/s | High |
-| SmolLM 1.7B | Q4_K_M | ~1.1 GB | ~12 tok/s | Medium-High |
-| Gemma 4 2B | Q4_K_M | ~1.2 GB | ~10 tok/s | High (risky) |
 
 **Tips for optimization:**
 - Reduce `-c` (context) if you hit OOM errors
