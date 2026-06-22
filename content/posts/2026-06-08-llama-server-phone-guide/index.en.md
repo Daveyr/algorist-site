@@ -47,7 +47,7 @@ This step varies by manufacturer. For Samsung:
 ```bash
 adb reboot bootloader
 # Your phone enters Download Mode (large text at top)
-# Hold Volume Up to enter Fastboot (if available) or proceed to Odin
+# Hold Volume Up to enter Fastboot (if available), otherwise proceed to Odin (the primary tool for Samsung devices)
 ```
 
 **Warning:** Unlocking the bootloader will wipe your device.
@@ -223,8 +223,8 @@ Once complete, the main binary is at `llama.cpp/build/bin/llama-server`.
 # Should print version info
 ```
 
-Typing ./build/bin/llama-server each time is a hastle but if you add the following line to the end of your .bashrc file in your phone's home folder you can simply type llama-server and the phone will understand the path:
-`export PATH=$PATH:~llama.cpp/build/bin`. I'll refer to the command `llama-server` in the instructions from now on.
+Typing ./build/bin/llama-server each time is a hassle but if you add the following line to the end of your .bashrc file in your phone's home folder you can simply type llama-server and the phone will understand the path:
+`export PATH=$PATH:~/llama.cpp/build/bin`. I'll refer to the command `llama-server` in the instructions from now on.
 
 ## Part 5: Downloading a Model
 
@@ -317,7 +317,7 @@ You should get a JSON response with the model's reply.
 
 ## Part 7: Integration with OpenCode
 
-Now that you have an OpenAI-compatible API running on your phone, you can use it as a model in a terminal user interface such as **OpenCode** other tools that support OpenAI-compatible endpoints. However, it is probably best used as a local subagent because these often have a narrower focus and minimal context, which suits a small local better better than the primary agent.
+Now that you have an OpenAI-compatible API running on your phone, you can use it as a model in a terminal user interface such as **OpenCode** or other tools that support OpenAI-compatible endpoints. However, it is probably best used as a local subagent because these often have a narrower focus and minimal context, which suits a small local model better than the primary agent.
 
 In your OpenCode configuration, add:
 
@@ -354,7 +354,7 @@ In your OpenCode configuration, add:
   }
 }
 ```
-As a bonus, if you added this configuration to your opencode.json configuration you would get an agent the same accent colour as this website!
+As a bonus, if you added this to your `opencode.json` configuration you would get an agent the same accent colour as this website!
 
 ![A green agent in OpenCode](images/lfm_agent_green.png)
 
