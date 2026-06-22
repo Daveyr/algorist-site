@@ -69,6 +69,8 @@ I've flashed a few phones and tablets in the past (both Samsung and non-Samsung 
 1. Leave Android and power off. Then boot into Download Mode (varies by phone but mine needed Power Down + Power Up and then connection by USB to my PC)
 1. Finally, you should see the words "KG STATE: Checking" and you are able to install other ROMs (like LineageOS) and recovery utilities (like TWRP).
 
+![kg-state checking](images/kg_state.jpg)
+
 After bootloader unlock and bypassing KG STATE, your phone reboots with stock ROM but is now unlocked.
 
 ### Step 1.3: Flash TWRP (TeamWin Recovery Project)
@@ -315,7 +317,7 @@ You should get a JSON response with the model's reply.
 
 ## Part 7: Integration with OpenCode
 
-Now that you have an OpenAI-compatible API running on your phone, you can use it as a local subagent in **OpenCode** or other tools that support OpenAI-compatible endpoints.
+Now that you have an OpenAI-compatible API running on your phone, you can use it as a model in a terminal user interface such as **OpenCode** other tools that support OpenAI-compatible endpoints. However, it is probably best used as a local subagent because these often have a narrower focus and minimal context, which suits a small local better better than the primary agent.
 
 In your OpenCode configuration, add:
 
@@ -356,10 +358,10 @@ As a bonus, if you added this configuration to your opencode.json configuration 
 
 ![A green agent in OpenCode](images/lfm_agent_green.png)
 
-This lets you spawn lightweight subagents on your phone for tasks like:
+In the example above, I have configured a locally hosted LFM2.5-1.2b model to use bash tools to explore over a local folder structure. However, you could define lightweight subagents to delegate various tasks to your phone like:
 - Code linting and formatting checks
 - Web searches (with an MCP server)
-- Recipe retrieval (like the `recipe_recall` MCP server)
+- Recipe retrieval (like the [recipe_recall](/projects/2026-04-26-recipe-recall) MCP server I made last year)
 - Any deterministic task that doesn't need a large context or complex reasoning
 
 **Tips for optimization:**
@@ -372,7 +374,7 @@ This lets you spawn lightweight subagents on your phone for tasks like:
 
 ### Server crashes after a few minutes
 - **Cause:** Thermal throttling or OOM
-- **Fix:** Reduce `-t` to 2–3, or reduce `-c` to 2048
+- **Fix:** Reduce `-t` (threads) to 2–3, or reduce `-c` (context) to 2048
 
 ### `bind: Address already in use`
 - **Cause:** Port 8080 already in use
@@ -380,7 +382,7 @@ This lets you spawn lightweight subagents on your phone for tasks like:
 
 ### Model won't load / OOM kill
 - **Cause:** Not enough free RAM
-- **Fix:** Use `--host 0.0.0.0 -fit off` or reduce context size
+- **Fix:** Use `--host 0.0.0.0 -fit off`, reduce context size, or use a smaller model
 
 ### SSH connection refused
 - **Cause:** SSH daemon not running
@@ -394,7 +396,7 @@ Now that you have a working inference server, consider:
 3. **Building MCP servers** for specialized tasks (e.g., web search, recipe lookup)
 4. **Exploring Droidian** (Debian native OS) if you need more RAM for larger models
 
-The cost perspective is compelling: your phone is already paid for, the electricity cost is minimal, and you get a capable inference endpoint for tasks that don't need a powerful model. As cloud AI pricing climbs, this kind of setup will become increasingly attractive.
+The cost perspective is compelling: your phone is already paid for, the electricity cost is minimal, and you get a capable inference endpoint for tasks that don't need a powerful model. Also, if your target device is old then you have much less to lose if you go wrong. I've used many different devices like these (phones, kindles, tablets, Raspberry Pi) to test projects I'd never have dared to do on my main computer. With this AI server under your belt, what other hardware will you try?
 
 ## References
 
