@@ -10,7 +10,7 @@ tags:
   - Android
   - Hardware
   - Tutorial
-draft: true
+draft: false
 ---
 
 This post continues from [AI llama-server on a phone](/posts/ai-llama-server-on-a-phone/) with a detailed walkthrough of every step needed to flash LineageOS, set up Termux, build llama.cpp, and serve a small language model over your local network.
