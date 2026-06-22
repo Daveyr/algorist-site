@@ -69,7 +69,7 @@ I've flashed a few phones and tablets in the past (both Samsung and non-Samsung 
 1. Leave Android and power off. Then boot into Download Mode (varies by phone but mine needed Power Down + Power Up and then connection by USB to my PC)
 1. Finally, you should see the words "KG STATE: Checking" and you are able to install other ROMs (like LineageOS) and recovery utilities (like TWRP).
 
-![kg-state checking](images/kg_state.jpg)
+<div align="center"><img src="images/kg_state.jpg" alt="kg-state checking" width="50%"></div>
 
 After bootloader unlock and bypassing KG STATE, your phone reboots with stock ROM but is now unlocked.
 
@@ -237,7 +237,7 @@ Models are stored in **GGUF format** with different quantisation levels:
 
 For a 4 GB phone, **Q4_K_M is optimal** for 1–2B parameter models. 
 
->[!NOTE] As an aside, [Ollama](ollama.com) typically uses this quantisation as default for local models and some cloud models too, because the memory efficiency is appreciable but the precision loss is not.
+>[!NOTE] As an aside, [Ollama](ollama.com) typically uses Q4_K_M quantisation as default for local models because the memory efficiency is appreciable but the precision loss is not.
 
 ### Step 5.2: Download via llama-server
 
