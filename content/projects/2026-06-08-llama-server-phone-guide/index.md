@@ -4,7 +4,7 @@ author: ''
 date: '2026-06-08'
 slug: []
 categories:
-  - Blog
+  - Project
 tags:
   - AI
   - Android

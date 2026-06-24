@@ -32,4 +32,6 @@ And in case you were wondering, the subagent would tell you that olives don't be
 
 ## What next?
 
-You may be left wondering about the specific details around how I maximised the working phone RAM (flashed LineageOS), how I gained terminal access (F-Droid and Termux) and the specifics around the model inference engine and server ([llama.cpp](https://github.com/ggml-org/llama.cpp)). I will follow up with a further blog and/or project post with more details, including my experience using various models for various use cases.
+You may be left wondering about the specific details discussed here. Please see [Running llama-server on Android: A Complete Walkthrough](/projects/2026-06-08-llama-server-phone-guide/) with more details.
+
+I'll also follow up later with my experience using this setup with various models and various use cases.
