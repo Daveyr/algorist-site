@@ -12,7 +12,7 @@ draft: true
 
 ## Be your own AI provider
 
-After Microsoft Copilot's [move from subscription requests to credit-based usage](<insert url here>) on 1 June 2026, the company has tried to lighten the bill shock by providing access to cheaper open weight models, such as Kimi K2.7 Code (available just over a one month [later]()https://github.blog/changelog/2026-08-06-kimi-k3-is-now-available-in-github-copilot/). Meanwhile, there have been plenty of even cheaper model options on _another_ Microsoft enterprise platform hiding in plain sight: **Microsoft Foundry**. Read on to learn how to consume models you deploy yourself on  MS Foundry alongside your regular options in both OpenCode and Copilot CLI.
+After Microsoft Copilot's [move from subscription requests to credit-based usage](https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/) on 1 June 2026, the company has tried to lighten the bill shock by providing access to cheaper open weight models, such as Kimi K2.7 Code (available just over a one month [later](https://github.blog/changelog/2026-08-06-kimi-k3-is-now-available-in-github-copilot/)). Meanwhile, there have been plenty of even cheaper model options on _another_ Microsoft enterprise platform hiding in plain sight: **Microsoft Foundry**. Read on to learn how to consume models you deploy yourself on  MS Foundry alongside your regular options in both OpenCode and Copilot CLI.
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ To follow along, you will need to have:
 * A base model deployment in that project, with an endpoint and API key
 * Azure model read access for your user ID
 
-When you look at the model endpoint, note how it conforms to the common openAI API endpoint format. We used it previously to [connect OpenCode Go to openwebUI](<insert blog url here>) and we're using it again to connect Foundry to OpenCode/Copilot. Foundry does add a small quirk though. If your project is called "foundry-project":
+When you look at the model endpoint, note how it conforms to the common openAI API endpoint format. We used this endpoint format previously to [connect OpenCode Go to openwebUI](/posts/2026-07-20-how-to-set-up-opencode-go-as-a-provider-in-openwebui/) and we're using it again to connect Foundry to OpenCode/Copilot. Foundry does add a small quirk though. If your project is called "foundry-project":
 
 * The provider will be called "foundry-project",
 * The base URL will be `https://foundry-project` `-resource` `.services.ai.azure.com/` `openai/v1`
@@ -32,7 +32,7 @@ I've separated the parts of the URL to show the first part (the project name) an
 
 ## OpenCode
 
-We'll start with OpenCode first as the configuration is a lot easier. OpenCode's main USP is that it connects to everything, and Foundry is as equally well [documented](<insert opencode document reference to MS Foundry provider config>) as any other provider.
+We'll start with OpenCode first as the configuration is a lot easier. OpenCode's main USP is that it connects to everything, and Foundry is as equally well [documented](https://opencode.ai/docs/providers/#custom-provider) as any other provider.
 
 Below is a minimal `opencode.json` configuration file that does the following:
 
