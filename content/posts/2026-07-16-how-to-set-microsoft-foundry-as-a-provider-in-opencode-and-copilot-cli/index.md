@@ -7,7 +7,7 @@ categories: []
 tags:
   - AI
   - Tutorial
-draft: true
+draft: false
 ---
 
 ## Be your own AI provider
@@ -21,7 +21,7 @@ This is not a tutorial on Microsoft Foundry. The new Foundry view is pretty intu
 To follow along, you will need to have:
 * A Foundry azure resource group (called a "project")
 * A base model deployment in that project, with an endpoint and API key
-* Azure model read access for your user ID
+* The **Cognitive Services OpenAI User** role assigned to your user ID (at minimum)
 
 When you look at the model endpoint, note how it conforms to the common openAI API endpoint format. We used this endpoint format previously to [connect OpenCode Go to openwebUI](/posts/2026-07-20-how-to-set-up-opencode-go-as-a-provider-in-openwebui/) and we're using it again to connect Foundry to OpenCode/Copilot. Foundry does add a small quirk though. If your project is called "foundry-project":
 
@@ -127,6 +127,6 @@ Below is the same example Foundry custom provider as for Copilot, but for the sa
 
 ## Summary
 
-When I first used this technique, I estimated I had saved around $70 in a week across 4 people and 15 million tokens, comparing Foundry Deepseek against Copilot's default model of GPT-Codex 5.3. Now there are cheaper models available directly from Copilot, the savings per token may not be as great, but there is still nothing as cheap as Deepseek V4 Flash or MiMo 2.5 available on Copilot as of now. 
+When I first used this technique, I estimated I had saved around £72 in a week across 4 people and just over 15 million tokens, comparing Foundry Deepseek against Sonnet 4.6 from Copilot. Now there are cheaper models available directly from Copilot, the savings per token may not be as great, but there is still nothing as cheap as Deepseek V4 Flash or MiMo 2.5 available on Copilot as of now. 
 
 Maybe things will change again, but at least you know how to connect terminal user interfaces to Microsoft Foundry. And since the base model deployments are all openAI API compatible, it should serve to demystify any other such model deployment process you may stumble across in future.
