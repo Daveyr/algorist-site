@@ -32,7 +32,7 @@ I've separated the parts of the URL to show the first part (the project name) an
 
 ## OpenCode
 
-We'll start with OpenCode first as the configuration is a lot easier. OpenCode's main USP is that it connects to everything, and Foundry is configured as an openAI compatible  [custom provider](https://opencode.ai/docs/providers/#custom-provider) rather than the Azure OpenAI or Azure Cognitive Services provider.
+We'll start with OpenCode first as the configuration is a lot easier. OpenCode's main USP is that it connects to everything, and Foundry is configured as an openAI compatible  [custom provider](https://opencode.ai/docs/providers/#custom-provider) rather than the Azure OpenAI or Azure Cognitive Services provider documented in the help page.
 
 Below is a minimal `opencode.json` configuration file that does the following:
 
