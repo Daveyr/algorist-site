@@ -21,7 +21,7 @@ This is not a tutorial on Microsoft Foundry. The new Foundry view is pretty intu
 To follow along, you will need to have:
 * A Foundry azure resource group (called a "project")
 * A base model deployment in that project, with an endpoint and API key
-* The **Cognitive Services OpenAI User** role assigned to your user ID (at minimum)
+* The **Cognitive Services OpenAI User** or **Foundry User** role assigned to your user ID (at minimum)
 
 When you look at the model endpoint, note how it conforms to the common openAI API endpoint format. We used this endpoint format previously to [connect OpenCode Go to openwebUI](/posts/2026-07-20-how-to-set-up-opencode-go-as-a-provider-in-openwebui/) and we're using it again to connect Foundry to OpenCode/Copilot. Foundry does add a small quirk though. If your project is called "foundry-project":
 
@@ -32,7 +32,7 @@ I've separated the parts of the URL to show the first part (the project name) an
 
 ## OpenCode
 
-We'll start with OpenCode first as the configuration is a lot easier. OpenCode's main USP is that it connects to everything, and Foundry is as equally well [documented](https://opencode.ai/docs/providers/#custom-provider) as any other provider.
+We'll start with OpenCode first as the configuration is a lot easier. OpenCode's main USP is that it connects to everything, and Foundry is configured as an openAI compatible  [custom provider](https://opencode.ai/docs/providers/#custom-provider) rather than the Azure OpenAI or Azure Cognitive Services provider.
 
 Below is a minimal `opencode.json` configuration file that does the following:
 
