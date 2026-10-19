@@ -16,7 +16,7 @@ A few months ago I deployed an [LLM on an old smartphone](/posts/2026-06-03-ai-l
 
 ## What are decision models?
 
-The first decision model I heard of was [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Jev and other decision models are <fill in short explanation about being strong typed, quicker, lower memory requirements>
+The first decision model I heard of was [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Jev and other decision models are a different kind of model: instead of generating text one token at a time, they read a state once and *score* a set of typed questions that you define in advance, returning type-safe structured answers (`choice`, `score` or `noul`) with a calibrated probability and a confidence score attached to each one. Because the answer is always one of the options you supplied, the model cannot hallucinate a schema, and there is nothing to parse or validate before your code uses it. Every question in a request is answered in parallel in a single forward pass, so a decision comes back in milliseconds rather than the seconds a chat model takes, and the models themselves are small enough to run on hardware you would never try to run an LLM on. TypeSafe report Jev as matching frontier LLMs on these tasks while being two orders of magnitude faster and cheaper, and the open models are tiny by comparison: Laya is 421M parameters, around 450MB at Q8_0, and answers a question in roughly 5ms on the reference hardware.
 
 So what are decision models good for? When I first heard of them, my immediate thought ran to these examples from my work:
 * Asset condition grading on a scale (1-5, very poor to very good, etc.) from a free text field based on strict criteria.
@@ -27,8 +27,15 @@ So what are decision models good for? When I first heard of them, my immediate t
 * Feature engineering from free text fields (all too common in source systems) to enhance predictive models.
 
 ## Prerequisites
-If you have been following along from [before](), you need to make sure <refine these notes: Your build must be recent enough. The /v1/systemone API landed in llama.cpp v0.6.0 (Oct 2026, PR #29818). Your guide is from June 2026, so if you built then you'll need to update:
-cd ~/llama.cpp && git pull && cmake --build build -j4>
+If you have been following along from [before](/projects/2026-06-08-llama-server-phone-guide/), you need to make sure your build is recent enough. The `/v1/systemone` endpoint landed in llama.cpp v0.6.0 (October 2026, PR [#29818](https://github.com/ggml-org/llama.cpp/pull/29818)), so a build from the June guide won't have it. Pull and rebuild:
+
+```bash
+cd ~/llama.cpp
+git pull
+cmake --build build -j4
+```
+
+That reuses the same `build` directory you configured in the walkthrough, so it costs 10–30 minutes on the phone and nothing else changes. Everything else carries over — Termux, SSH, the `opencode.json` provider block — but do stop the old chat model server (or give the decision model a different port), because the model that is loaded is the model that answers the questions.
 
 ## Options
 
