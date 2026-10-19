@@ -18,6 +18,12 @@ A few months ago I deployed an [LLM on an old smartphone](/posts/2026-06-03-ai-l
 
 The first decision model I heard of was [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Jev and other decision models are a different kind of model from a pure language model. Instead of generating text one token at a time, they read a state once and *score* a set of typed questions that you define in advance, returning type-safe structured answers (`choice`, `score` or `noul`) with a calibrated probability and a confidence score attached to each one. As the answer is always one of the options you supplied, the model cannot hallucinate a schema (although that doesn't mean it always chooses the correct answer), and there is nothing to parse or validate before your code uses it. Every question in a request is answered in parallel in a single forward pass, so a decision comes back in milliseconds rather than the seconds a chat model takes, and the models themselves are small enough to run on hardware you would never try to run an LLM on (like my phone). TypeSafe report Jev as matching frontier LLMs on these tasks while being two orders of magnitude faster and cheaper, and the open models are tiny by comparison: Laya is 421M parameters, around 450MB at Q8_0, and answers a question in roughly 5ms on the reference hardware.
 
+<Explain:
+Jevons Paradox
+Meaning of Typesafe
+System One refers to the two systems of the brain, Thinking Fast and Slow by Daniel Kahneman and Amos Tversky.
+>
+
 So what are decision models good for? When I first heard of them, my immediate thought ran to these examples from my work:
 * Asset condition grading on a scale (1-5, very poor to very good, etc.) from a free text field based on strict criteria.
 * More specifically, sewer pipe condition categorisation (MSCC system in the UK) from CCTV images (potentially using an image-text to text model like [Clef](https://huggingface.co/Cloudflare/clef)).
