@@ -9,14 +9,14 @@ tags:
   - AI
   - Android
   - Hardware
-draft: true
+draft: false
 ---
 
 A few months ago I deployed an [LLM on an old smartphone](/posts/2026-06-03-ai-llama-server-on-a-phone). At the time I said that I was going to follow up later to share my experiences with various models and use cases and so here I am. What I didn't know back in June is that decision models would appear. They represent a fantastic fit for a frugal phone like mine, and a good first use case to share.
 
 ## What are decision models?
 
-The first decision model I heard of was [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Jev and other decision models are a different kind of model from a language model you may be familiar with. Instead of generating text one token at a time, they read a state once and *score* a set of typed questions against criteria that you define in advance. They then return type-safe structured answers (*choice*, *score* or *noul*) with a calibrated probability attached to each one, plus a confidence score for *choice* and *score* answers. As the answer is always one of the options you supplied, the model cannot hallucinate a schema (although that doesn't mean it always chooses the correct answer), and there is nothing to parse or validate before your code uses it. Every question in a request is answered in parallel in a single forward pass, so on a good GPU a decision comes back in milliseconds rather than the seconds a chat model takes, and the models themselves are small enough to run on hardware you would never try to run an LLM on (like my phone). TypeSafe report Jev as matching frontier LLMs on these tasks while being two orders of magnitude faster and cheaper, and the open models are tiny by comparison (hundreds of millions of parameters not hundreds of billions for frontier LLMs).
+The first decision model I heard of was [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Jev and other decision models are a different kind of model from a language model you may be familiar with. Instead of generating text one token at a time, they read a state once and *score* a set of typed questions against criteria that you define in advance. They then return type-safe structured answers (*choice*, *score* or *noul*) with a calibrated probability attached to each one, plus a confidence score for *choice* and *score* answers. As the answer is always one of the options you supplied, the model cannot hallucinate a schema (although that doesn't mean it always chooses the correct answer), and so the structure can be depended upon for downstream parsing. Every question in a request is answered in parallel in a single forward pass, so on a good GPU a decision comes back in milliseconds rather than the seconds a chat model takes, and the models themselves are small enough to run on hardware you would never try to run an LLM on (like my phone). TypeSafe report Jev as matching frontier LLMs on these tasks while being two orders of magnitude faster and cheaper, and the open models are tiny by comparison (hundreds of millions of parameters not hundreds of billions for frontier LLMs).
 
 There's a richness in the terminology used around Jev and so I thought I'd restate it here in case you miss it.
 
@@ -24,7 +24,7 @@ There's a richness in the terminology used around Jev and so I thought I'd resta
 * Typesafe's name refers to one of the key strengths of decision models: the model will never hallucinate the type of its response (choice, score, noul). This is known as being type safe.
 * Even the endpoint has rich meaning. Many decision models appear to be converging on Typesafe's endpoint, which is `/v1/systemone`. System One refers to one of two systems of the brain, first posited by Daniel Kahneman in his ground breaking book, Thinking Fast and Slow. I love this book and recommend you read it. Where System Two is the slower reasoning "part" of our brain, System One is the much faster, instinctive, reactive survivor "part" of our brain (metaphorical not literal parts, that is). You can see why Typesafe chose this nomenclature for Jev.
 
-## Motivations.
+## Use cases
 
 So what are decision models good for? When I first heard of them, my immediate thought ran to these examples from my work:
 * Asset condition grading on a scale (1-5, very poor to very good, etc.) from a free text field based on strict criteria.
