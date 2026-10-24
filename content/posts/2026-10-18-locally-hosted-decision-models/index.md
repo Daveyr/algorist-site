@@ -52,9 +52,9 @@ Make your life easier by installing ccache (type "pkg install ccache" in Termux)
 
 ## Model options
 
-There are a lot of decision models already out there! Fortunately there are a healthy subset that are compatible with my existing phone setup. These include laya, julia-1, lev, openjev, kev, clef and nimble, most of which have small variants that are suitable for edge deployment. I went with a very lightweight text only (no image) model, laya. It has only 0.4B parameters and is only around ~450mb in size, even at Q8_0 quantisation.
+There are a lot of decision models already out there! Fortunately there are a healthy subset that are compatible with my existing phone setup. These include Laya, julia-1, lev, openjev, kev, clef and nimble, most of which have small variants that are suitable for edge deployment. I went with a very lightweight text only (no image) model, Laya. It has only 0.4B parameters and is only around ~450mb in size, even at Q8_0 quantisation.
 
-As I am using llama.cpp, I used the GGUF, not the raw HF repo. convaiinnovations/laya is the official laya model on huggingface but it is a Transformers/ModernBERT model served by its own laya-serve Python server. The llama.cpp-native build is ggml-org/Laya-GGUF (ModernBERT encoder compiled into ggml). That's the one that plugs into /v1/systemone.
+As I am using llama.cpp, I used the GGUF, not the raw HF repo. convaiinnovations/laya is the official Laya model on huggingface but it is a Transformers/ModernBERT model served by its own laya-serve Python server. The llama.cpp-native build is ggml-org/Laya-GGUF (ModernBERT encoder compiled into ggml). That's the one that plugs into /v1/systemone.
 
 ## Install and test
 
@@ -173,6 +173,6 @@ Two runs illustrate the prompt format and the response structure, but also provi
 It's exciting to have a real-world productive use case for my AI-on-a-phone experiment but there's a few things still to do before I can put it to use.
 
 1. Registering as a model in OpenCode. I suspect that due to the unusual endpoint it will need to be invoked via an MCP tool, potentially wrapped in an agent that can parse the question, criteria and the response type.
-1. Evals. So far I haven't seen any evaluations tailored to asset-intensive industrial use cases so I'd like to explore that further. laya seems not to do well in standard benchmarks and so having a ranking of small decision models against an industry benchmark might be useful for myself and others to choose the best model amongst a burgeoning set of contenders.
+1. Evals. So far I haven't seen any evaluations tailored to asset-intensive industrial use cases so I'd like to explore that further. Laya seems not to do well in standard benchmarks and so having a ranking of small decision models against an industry benchmark might be useful for myself and others to choose the best model amongst a burgeoning set of contenders.
 
 Thanks for following, and I hope to return soon with experiments to operationalise and test this curious new variant of models.
