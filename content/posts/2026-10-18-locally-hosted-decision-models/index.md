@@ -16,12 +16,15 @@ A few months ago I deployed an [LLM on an old smartphone](/posts/2026-06-03-ai-l
 
 ## What are decision models?
 
-The first decision model I heard of was [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Jev and other decision models are a different kind of model from a pure language model. Instead of generating text one token at a time, they read a state once and *score* a set of typed questions that you define in advance, returning type-safe structured answers (`choice`, `score` or `noul`) with a calibrated probability and a confidence score attached to each one. As the answer is always one of the options you supplied, the model cannot hallucinate a schema (although that doesn't mean it always chooses the correct answer), and there is nothing to parse or validate before your code uses it. Every question in a request is answered in parallel in a single forward pass, so a decision comes back in milliseconds rather than the seconds a chat model takes, and the models themselves are small enough to run on hardware you would never try to run an LLM on (like my phone). TypeSafe report Jev as matching frontier LLMs on these tasks while being two orders of magnitude faster and cheaper, and the open models are tiny by comparison: Laya is 421M parameters, around 450MB at Q8_0, and answers a question in roughly 5ms on the reference hardware.
+The first decision model I heard of was [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Jev and other decision models are a different kind of model from a pure language model. Instead of generating text one token at a time, they read a state once and *score* a set of typed questions against criteria that you define in advance, returning type-safe structured answers (*choice*, *score* or *noul*) with a calibrated probability and a confidence score attached to each one. As the answer is always one of the options you supplied, the model cannot hallucinate a schema (although that doesn't mean it always chooses the correct answer), and there is nothing to parse or validate before your code uses it. Every question in a request is answered in parallel in a single forward pass, so a decision comes back in milliseconds rather than the seconds a chat model takes, and the models themselves are small enough to run on hardware you would never try to run an LLM on (like my phone). TypeSafe report Jev as matching frontier LLMs on these tasks while being two orders of magnitude faster and cheaper, and the open models are tiny by comparison (hundreds of millions of parameters not hundreds of billions for frontier LLMs).
 
-<Explain in bullet points:
-Jevons Paradox
-Meaning of Typesafe
-System One refers to the two systems of the brain, Thinking Fast and Slow by Daniel Kahneman and Amos Tversky.>
+There's a richness in the terminology used around Jev and so I thought I'd restate it here in case you miss it.
+
+* Jev is so named in honour of William Stanely Jevons, a 19th century economist who defined what we know as the _Jevons Paradox_. It refers to the paradox of growing efficiency of coal use in plant and machinery through the industrial revolution and how this led to *more coal use overall*. In the same way, Typesafe is inferring that as we make AI use more efficient (for instance, through lightweight decision models), overall AI consumption will still grow as we find even more use cases for AI at lower price points.
+* Typesafe's name refers to one of the key strengths of decision models: the model will never hallucinate the type of its response (choice, score, noul). This is known as being type safe.
+* Even the endpoint has rich meaning. Decision models have converged on Typesafe's endpoint, which is `/v1/systemone`. System One refers to one of two systems of the brain, first posited by Daniel Kahneman and Amos Tversky in their ground breaking book, Thinking Fast and Slow. I love this book and recommend you read it. Where System Two is the slower reasoning part of our brain, System One is the much faster, instinctive, reactive survivor part of our brain. You can see why Typesafe chose this nomenclature for Jev.
+
+## Motivations.
 
 So what are decision models good for? When I first heard of them, my immediate thought ran to these examples from my work:
 * Asset condition grading on a scale (1-5, very poor to very good, etc.) from a free text field based on strict criteria.
@@ -45,13 +48,13 @@ The above reuses the same `build` directory I showed in the walkthrough, so it i
 >[!TIP]
 Make your life easier by installing ccache (type "pkg ccache" in Termux), which speeds up the build process on old hardware and bad internet connections through caching.
 
-## Options
+## Model options
 
-There are a lot of decision models already out there! Fortunately there are a healthy subset that are compatible with my existing phone setup. These include laya, julia-1, lev, openjev, kev, clef and nimble. I went with a very lightweight text only (no image) model, laya. It has only 0.4B parameters and is only around ~450mb even at Q8_0 quantisation.
+There are a lot of decision models already out there! Fortunately there are a healthy subset that are compatible with my existing phone setup. These include laya, julia-1, lev, openjev, kev, clef and nimble. I went with a very lightweight text only (no image) model, laya. It has only 0.4B parameters and is only around ~450mb in size, even at Q8_0 quantisation.
 
-As I am using llama.cpp, I used the GGUF, not the raw HF repo. convaiinnovations/laya is the trending laya model on huggingface but it is a Transformers/ModernBERT model served by its own laya-serve Python server. The llama.cpp-native build is ggml-org/Laya-GGUF (ModernBERT encoder compiled into ggml). That's the one that plugs into /v1/systemone.
+As I am using llama.cpp, I used the GGUF, not the raw HF repo. convaiinnovations/laya is the official laya model on huggingface but it is a Transformers/ModernBERT model served by its own laya-serve Python server. The llama.cpp-native build is ggml-org/Laya-GGUF (ModernBERT encoder compiled into ggml). That's the one that plugs into /v1/systemone.
 
-## Installing Laya
+## Install and test
 
 From my phone I run:
 
@@ -86,7 +89,7 @@ This returns,
 "usage":{"input_tokens":111,"output_tokens":0}}
 
 
-The test succeeded. Laya on the phone's local IP address (192.168.1.210:8080) is responding to /v1/systemone and returned a sensible decision. Let's disect it and learn more about decision models.
+The test succeeded. Laya on the phone's local IP address (192.168.1.210:8080) is responding to /v1/systemone and returns a sensible decision. Let's dissect it and learn more about decision models.
 
 - route → billing with probability 0.984 (confidence 0.976) — correct for a double-charge complaint
 - angry → 0.787 (noul) — plausible for an unanswered complaint
@@ -95,11 +98,11 @@ The test succeeded. Laya on the phone's local IP address (192.168.1.210:8080) is
 - input_tokens: 111, output_tokens: 0 — decision models answer via scoring, not generation, so latency should be very low and token cost is just the prompt.
 - The model id reported is ggml-org/Laya-GGUF:Q8_0, confirming the local model is loaded and used.
 
-Natural next steps if you want them:
-1. Wire it into OpenCode as a decision subagent, mirroring the guide's opencode.json pattern (point baseURL at http://192.168.1.210:8080/v1), e.g. a triage/routing agent that calls /v1/systemone instead of chat completions.
-2. Tune thresholds — pick a confidence cutoff per question (their docs suggest acting above ~0.8 and escalating below).
-3. Test edge cases — short/ambiguous tickets, more options (up to 24), and the score question type — to calibrate cutoffs on your real data before relying on it.
-
 ## First impressions
 
 ## Next steps
+
+It's exciting to have a real-world productive use case for my AI-on-a-phone experiment but there's a few things still to do before I can put it to use.
+
+1. Registering as a model in OpenCode. I suspect that due to the unusual engpoint it will need to be invoked via an MCP tool, potentially wrapped in an agent that can parse the question, criteria and the response type.
+1. Evals. So far I haven't seen any evaluations tailored to asset-intensive industrial use cases so I'd like to explore that further.
